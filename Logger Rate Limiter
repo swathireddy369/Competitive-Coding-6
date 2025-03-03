@@ -1,0 +1,47 @@
+// Time Complexity :O(1)
+// Space Complexity :O(n)=> where n is the number of messages
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach: whenever shouldPrintMessage is called with message and timestamp,this method will trigger as well checking that hashmap contains that message previously or not, if not then i add message and corresponding timestamp to map and return true to print message,if the already exist in the hashmap then checking time gap between those two if it is greater than or equal 10 then i would print and update message timestamp in map otherwise return false.
+
+ class Logger{
+    private HashMap<String,Integer> sMap;
+    public Logger(){
+        this.sMap=new HashMap<>();
+    }
+    
+    public boolean shouldPrintMessage(int timeStamp,String message){
+        if(!sMap.containsKey(message)){
+           sMap.put(message,timeStamp) ;
+            return true;
+        }else{
+            int prev=sMap.get(message);
+            if((timeStamp - prev) >= 10){
+                sMap.put(message,timeStamp);
+                return true;
+            };
+        }
+        return false;
+    }
+  
+}
+public class Sample{
+     public static void main(String args[]){
+        Logger logger=new Logger();
+// logging string "foo" at timestamp 1   
+System.out.println(logger.shouldPrintMessage(1, "foo"));
+// logging string "bar" at timestamp 2
+System.out.println(logger.shouldPrintMessage(2,"bar")); 
+// logging string "foo" at timestamp 3
+System.out.println(logger.shouldPrintMessage(3,"foo")); 
+// logging string "bar" at timestamp 8
+System.out.println(logger.shouldPrintMessage(8,"bar")); 
+// logging string "foo" at timestamp 10
+System.out.println(logger.shouldPrintMessage(10,"foo")); 
+// logging string "foo" at timestamp 11
+System.out.println(logger.shouldPrintMessage(11,"foo"));
+
+    }
+}
